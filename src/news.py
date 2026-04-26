@@ -1,10 +1,11 @@
 import feedparser
 
 _FEEDS = {
-    "政治": "https://www3.nhk.or.jp/rss/news/cat04.xml",
-    "経済": "https://www3.nhk.or.jp/rss/news/cat05.xml",
-    "技術": "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml",
-    "AI":   "https://rss.itmedia.co.jp/rss/2.0/aiplus.xml",
+    "政治":       "https://www3.nhk.or.jp/rss/news/cat04.xml",
+    "経済":       "https://www3.nhk.or.jp/rss/news/cat05.xml",
+    "技術":       "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml",
+    "AI":         "https://rss.itmedia.co.jp/rss/2.0/aiplus.xml",
+    "セキュリティ": "https://rss.itmedia.co.jp/rss/2.0/security.xml",
 }
 
 _ITEMS_PER_CATEGORY = 2
