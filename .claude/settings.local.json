@@ -10,7 +10,9 @@
       "Bash(python *)",
       "Bash(pip install *)",
       "Bash(winget install *)",
-      "PowerShell(& \"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" --version)"
+      "PowerShell(& \"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" --version)",
+      "Bash(git checkout *)",
+      "Bash(git pull *)"
     ]
   }
 }
