@@ -15,6 +15,7 @@ def test_get_news_returns_two_per_category():
         _make_feed(["経済1", "経済2"]),
         _make_feed(["技術1", "技術2"]),
         _make_feed(["AI1", "AI2"]),
+        _make_feed(["セキュリティ1", "セキュリティ2"]),
     ]
 
     with patch("news.feedparser.parse", side_effect=feeds):
@@ -24,10 +25,11 @@ def test_get_news_returns_two_per_category():
     assert result["経済"] == [("経済1", "https://example.com/経済1"), ("経済2", "https://example.com/経済2")]
     assert result["技術"] == [("技術1", "https://example.com/技術1"), ("技術2", "https://example.com/技術2")]
     assert result["AI"] == [("AI1", "https://example.com/AI1"), ("AI2", "https://example.com/AI2")]
+    assert result["セキュリティ"] == [("セキュリティ1", "https://example.com/セキュリティ1"), ("セキュリティ2", "https://example.com/セキュリティ2")]
 
 
 def test_get_news_truncates_to_two():
-    feeds = [_make_feed([f"記事{i}" for i in range(10)])] * 4
+    feeds = [_make_feed([f"記事{i}" for i in range(10)])] * 5
 
     with patch("news.feedparser.parse", side_effect=feeds):
         result = get_news()
@@ -40,6 +42,6 @@ def test_get_news_fallback_on_error():
     with patch("news.feedparser.parse", side_effect=Exception("feed error")):
         result = get_news()
 
-    assert set(result.keys()) == {"政治", "経済", "技術", "AI"}
+    assert set(result.keys()) == {"政治", "経済", "技術", "AI", "セキュリティ"}
     for items in result.values():
         assert items == []
