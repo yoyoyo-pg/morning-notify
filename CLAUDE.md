@@ -27,7 +27,7 @@ GitHub Actions (cron: 0 22 * * * UTC = 毎朝7時 JST)
 └── src/main.py
     ├── weather.py     → wttr.in JSON API で名古屋の天気取得（APIキー不要）
     ├── calendar.py    → Google Calendar API（OAuth2 refresh token 認証）
-    ├── news.py        → feedparser で日本語RSSを取得（政治・経済・技術・AI 各2件）
+    ├── news.py        → feedparser で日本語RSSを取得（政治・経済・技術・AI・セキュリティ 各2件）
     └── notifier.py    → Discord Webhook で通知送信
 ```
 
@@ -50,6 +50,12 @@ pytest tests/test_weather.py           # 単一テスト実行
 | `GOOGLE_CLIENT_SECRET` | Google OAuth クライアントシークレット |
 | `GOOGLE_REFRESH_TOKEN` | Google Calendar アクセス用リフレッシュトークン |
 | `DISCORD_WEBHOOK_URL` | Discord Webhook URL |
+
+## 開発ルール
+
+- 作業は必ず新規ブランチを切って行う（masterへの直接コミットは禁止）
+- ブランチ名は `claude/<作業内容>` の形式にする
+- 実装が完了したらmasterへのプルリクエストを作成する
 
 ## 制約
 
