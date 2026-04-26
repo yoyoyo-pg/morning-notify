@@ -4,7 +4,9 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(gh pr *)"
+      "Bash(gh pr *)",
+      "Bash(pytest *)",
+      "PowerShell(python -m pytest tests/ -v)"
     ]
   }
 }
