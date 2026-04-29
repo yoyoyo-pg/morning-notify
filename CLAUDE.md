@@ -11,15 +11,19 @@ morning-notify/
 ├── .github/workflows/
 │   ├── morning-notify.yml  # 朝の通知（毎朝6時 JST）
 │   ├── evening-notify.yml  # 夜の振り返りリマインダー（毎晩21時 JST）
+│   ├── events-notify.yml   # イベントくん通知（月・木 6時 JST）
 │   └── test.yml            # PRテスト（pytest）
-├── src/
+├── src/                    # リマインくん
 │   ├── main.py             # 朝通知エントリーポイント。各モジュールを呼び出して通知を組み立てる
 │   ├── main_evening.py     # 夜通知エントリーポイント。振り返りリマインダーを送信する
 │   ├── weather.py          # wttr.in APIで名古屋の天気を取得
 │   ├── gcalendar.py        # Google Calendar APIで当日の予定を取得（要: GOOGLE_* 環境変数）
 │   ├── news.py             # RSSフィードから日本語ニュースを取得（政治・経済・国際・AI・セキュリティ・Zenn）
 │   ├── journal.py          # Notion APIで日次ジャーナルページを作成（要: NOTION_* 環境変数）
-│   └── notifier.py         # Discord Webhookへ通知を送信
+│   └── notifier.py         # Discord Webhookへ通知を送信（イベントくんも共用）
+├── eventkun/               # イベントくん
+│   ├── main.py             # エントリーポイント。embedを組み立てて送信
+│   └── events.py           # Connpass APIから愛知県の直近イベントを取得
 ├── tests/
 │   ├── conftest.py         # テスト共通設定（env stub、Discord Webhookブロック）
 │   ├── test_weather.py
@@ -27,12 +31,13 @@ morning-notify/
 │   ├── test_notifier.py
 │   ├── test_calendar.py
 │   ├── test_journal.py
-│   └── test_evening.py
+│   ├── test_evening.py
+│   └── test_eventkun.py
 ├── docs/
 │   ├── ideas.md            # 開発アイデアメモ
 │   ├── lessons.md          # 実装を通じて得た教訓
 │   └── ai-coding-experience.md  # AIコーディング体験記
-├── pytest.ini              # pythonpath = src を設定済み
+├── pytest.ini              # pythonpath = eventkun src を設定済み
 ├── requirements.txt
 └── .env.example
 ```

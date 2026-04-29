@@ -229,6 +229,24 @@ codex   # インタラクティブモードで起動
 codex exec --full-auto --sandbox read-only --cd . "このコードをレビューしてください"
 ```
 
+## イベントくん
+
+名古屋・愛知エリアの直近イベントを月・木の朝6時にDiscordへ通知するボット。リマインくんとは別ディレクトリ（`eventkun/`）で管理する。
+
+| 項目 | 内容 |
+|------|------|
+| 情報源 | [Connpass API](https://connpass.com/about/api/) |
+| エリア | 愛知県（`prefecture=aichi`） |
+| 件数 | 直近5件 |
+| 通知先 | `DISCORD_WEBHOOK_URL`（現在はリマインくんと同チャンネル） |
+| 実行 | 月・木 6:00 JST（cron: `0 21 * * 1,4` UTC） |
+
+### ローカル実行
+
+```bash
+DISCORD_WEBHOOK_URL=https://... PYTHONPATH=src python eventkun/main.py
+```
+
 ## 今後の展望
 
 - **タスクの持ち越し機能**
