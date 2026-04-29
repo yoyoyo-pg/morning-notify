@@ -21,8 +21,3 @@ jobs:
 
       - name: Run tests
         run: pytest tests/
-
-      - name: Send test notification to Discord
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: python src/main.py

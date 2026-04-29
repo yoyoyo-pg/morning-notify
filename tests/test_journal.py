@@ -33,29 +33,30 @@ def test_create_journal_page_sets_title():
     assert kwargs["properties"]["title"][0]["text"]["content"] == _TITLE
 
 
-def test_create_journal_page_has_three_todo_blocks():
+def test_create_journal_page_has_todo_blocks():
     mock = _mock_notion()
     with patch("journal.Client", return_value=mock):
         create_journal_page(_TITLE)
 
     children = mock.pages.create.call_args[1]["children"]
     todo_blocks = [b for b in children if b["type"] == "to_do"]
-    assert len(todo_blocks) == 3
+    assert len(todo_blocks) == 6
     assert all(not b["to_do"]["checked"] for b in todo_blocks)
 
 
-def test_create_journal_page_has_memo_section():
+def test_create_journal_page_has_sections():
     mock = _mock_notion()
     with patch("journal.Client", return_value=mock):
         create_journal_page(_TITLE)
 
     children = mock.pages.create.call_args[1]["children"]
-    memo_headings = [
-        b for b in children
-        if b["type"] == "heading_2"
-        and b["heading_2"]["rich_text"][0]["text"]["content"] == "メモ"
+    headings = [
+        b["heading_2"]["rich_text"][0]["text"]["content"]
+        for b in children if b["type"] == "heading_2"
     ]
-    assert len(memo_headings) == 1
+    assert "やること" in headings
+    assert "やれたこと" in headings
+    assert "メモ" in headings
 
 
 def test_create_journal_page_sets_parent_id():
