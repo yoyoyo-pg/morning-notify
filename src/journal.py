@@ -43,8 +43,10 @@ def create_journal_page(title: str) -> str:
             _to_do(),
             _to_do(),
             {"object": "block", "type": "divider", "divider": {}},
-            _heading_2("メモ"),
-            _paragraph(),
+            _heading_2("やれたこと"),
+            _to_do(),
+            _to_do(),
+            _to_do(),
         ],
     )
 
