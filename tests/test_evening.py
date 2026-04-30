@@ -10,5 +10,5 @@ def test_build_embed_content_has_date():
 def test_build_embed_has_required_fields():
     _, embed = build_embed()
     assert embed["title"] == "📓 振り返りの時間です"
-    assert "description" in embed
+    assert embed["description"] == "今日のやること・やれたことを記録しましょう。"
     assert "color" in embed
