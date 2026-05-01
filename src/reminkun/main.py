@@ -62,9 +62,12 @@ def build_embeds() -> tuple[str, list[dict]]:
     try:
         news = get_news()
         fields = [
-            {"name": f"【{category}】", "value": f"[{title}]({link})", "inline": False}
+            {
+                "name": f"【{category}】",
+                "value": "\n".join(f"[{title}]({link})" for title, link in items) or "取得できませんでした",
+                "inline": False,
+            }
             for category, items in news.items()
-            for title, link in items
         ]
         news_embed = {
             "title": "📰 本日のインサイトフルなニュース",

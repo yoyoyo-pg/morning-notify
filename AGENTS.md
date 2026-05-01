@@ -9,10 +9,10 @@
 ```
 morning-notify/
 ├── .github/workflows/morning-notify.yml   # スケジュール実行定義
-├── src/
+├── src/reminkun/
 │   ├── main.py          # エントリーポイント。各モジュールを呼び出して通知を組み立てる
 │   ├── weather.py       # wttr.in APIで名古屋の天気を取得
-│   ├── calendar.py      # Google Calendar APIで当日の予定を取得
+│   ├── gcalendar.py     # Google Calendar APIで当日の予定を取得
 │   ├── news.py          # RSSフィードから日本語ニュースを取得
 │   └── notifier.py      # Discordへ通知を送信
 ├── tests/
@@ -33,14 +33,14 @@ morning-notify/
 
 ```bash
 pip install -r requirements.txt   # 依存インストール
-python src/main.py                # ローカル実行
+python src/reminkun/main.py                # ローカル実行
 pytest tests/                     # テスト実行
 ```
 
 ## 制約
 
 - 認証情報をコードにハードコードしない（必ず環境変数から読む）
-- 既存のモジュール構成（weather / calendar / news / notifier）を理由なく変えない
+- 既存のモジュール構成（weather / gcalendar / news / journal / notifier）を理由なく変えない
 - 新しい外部APIを勝手に追加しない
 - Google Calendar認証は非対話型（refresh token方式）のみ使用する
 - GitHub Actions の cron はUTC基準: `0 22 * * *` = JST 7:00

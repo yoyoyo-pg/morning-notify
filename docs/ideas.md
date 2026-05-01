@@ -56,8 +56,8 @@
 ### 実装の進め方（案）
 
 1. 情報ソースを決める（どこから取るか）
-2. `src/events.py` を新規作成
-3. `src/main_events.py`（イベント通知専用のエントリーポイント）を作成
+2. `src/eventkun/events.py` を新規作成（または既存の実装を参考に拡張）
+3. `src/eventkun/main.py`（イベント通知専用のエントリーポイント）を作成
 4. `.github/workflows/events-notify.yml` を追加
 5. Discord に `#events` チャンネルと専用Webhookを用意
 

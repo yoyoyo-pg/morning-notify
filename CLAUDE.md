@@ -13,17 +13,18 @@ morning-notify/
 │   ├── evening-notify.yml  # 夜の振り返りリマインダー（毎晩21時 JST）
 │   ├── events-notify.yml   # 厚切りジェイソン通知（月・木 6時 JST）
 │   └── test.yml            # PRテスト（pytest）
-├── src/                    # ショーンK
-│   ├── main.py             # 朝通知エントリーポイント。各モジュールを呼び出して通知を組み立てる
-│   ├── main_evening.py     # 夜通知エントリーポイント。振り返りリマインダーを送信する
-│   ├── weather.py          # wttr.in APIで名古屋の天気を取得
-│   ├── gcalendar.py        # Google Calendar APIで当日の予定を取得（要: GOOGLE_* 環境変数）
-│   ├── news.py             # RSSフィードから日本語ニュースを取得（政治・経済・国際・AI・セキュリティ・Zenn）
-│   ├── journal.py          # Notion APIで日次ジャーナルページを作成（要: NOTION_* 環境変数）
-│   └── notifier.py         # Discord Webhookへ通知を送信（厚切りジェイソンも共用）
-├── eventkun/               # 厚切りジェイソン
-│   ├── main.py             # エントリーポイント。embedを組み立てて送信
-│   └── events.py           # Connpass APIから愛知県の直近イベントを取得
+├── src/
+│   ├── reminkun/           # ショーンK（リマインくん）
+│   │   ├── main.py         # 朝通知エントリーポイント。各モジュールを呼び出して通知を組み立てる
+│   │   ├── main_evening.py # 夜通知エントリーポイント。振り返りリマインダーを送信する
+│   │   ├── weather.py      # wttr.in APIで名古屋の天気を取得
+│   │   ├── gcalendar.py    # Google Calendar APIで当日の予定を取得（要: GOOGLE_* 環境変数）
+│   │   ├── news.py         # RSSフィードから日本語ニュースを取得（政治・経済・国際・AI・セキュリティ・Zenn）
+│   │   ├── journal.py      # Notion APIで日次ジャーナルページを作成（要: NOTION_* 環境変数）
+│   │   └── notifier.py     # Discord Webhookへ通知を送信（厚切りジェイソンも共用）
+│   └── eventkun/           # 厚切りジェイソン
+│       ├── main.py         # エントリーポイント。embedを組み立てて送信
+│       └── events.py       # Connpass APIから愛知県の直近イベントを取得
 ├── tests/
 │   ├── conftest.py         # テスト共通設定（env stub、Discord Webhookブロック）
 │   ├── test_weather.py
@@ -37,7 +38,7 @@ morning-notify/
 │   ├── ideas.md            # 開発アイデアメモ
 │   ├── lessons.md          # 実装を通じて得た教訓
 │   └── ai-coding-experience.md  # AIコーディング体験記
-├── pytest.ini              # pythonpath = eventkun src を設定済み
+├── pytest.ini              # pythonpath = src/reminkun src/eventkun を設定済み
 ├── requirements.txt
 └── .env.example
 ```
@@ -46,7 +47,7 @@ morning-notify/
 
 ```
 GitHub Actions (cron: 0 21 * * * UTC = 毎朝6時 JST)
-└── src/main.py
+└── src/reminkun/main.py
     ├── weather.py     → wttr.in JSON API で名古屋の天気取得（APIキー不要）
     ├── gcalendar.py   → Google Calendar API（OAuth2 refresh token 認証）
     ├── news.py        → feedparser で日本語RSSを取得（各カテゴリ3件）
@@ -58,8 +59,8 @@ GitHub Actions (cron: 0 21 * * * UTC = 毎朝6時 JST)
 
 ```bash
 pip install -r requirements.txt        # 依存インストール
-python src/main.py                     # ローカル実行（.envに環境変数を設定した上で）
-pytest tests/                          # テスト実行（pytest.ini により src/ がパスに追加される）
+python src/reminkun/main.py                # ローカル実行（.envに環境変数を設定した上で）
+pytest tests/                          # テスト実行（pytest.ini により src/reminkun src/eventkun がパスに追加される）
 pytest tests/test_weather.py           # 単一テスト実行
 ```
 
@@ -183,7 +184,7 @@ PRを作成する前に以下を必ず確認する。
 ### いつ使うか
 
 **使う（以下のいずれかに該当する場合）**
-- 新しいファイルを作成する（src/*.py、workflows/*.yml、tests/*.py など）
+- 新しいファイルを作成する（src/reminkun/*.py、src/eventkun/*.py、workflows/*.yml、tests/*.py など）
 - 複数ファイルにまたがる実装をする
 - 外部情報（RSS、API仕様、ドキュメント）の調査が必要
 - レビューの観点を実装と分けたい

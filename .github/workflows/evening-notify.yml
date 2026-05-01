@@ -22,4 +22,4 @@ jobs:
       - name: Send evening notification
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: python src/main_evening.py
+        run: python src/reminkun/main_evening.py
