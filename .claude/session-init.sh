@@ -7,6 +7,9 @@ touch "$MARKER"
 
 echo "=== セッション開始チェック（自動実行）==="
 echo ""
+echo "### 現在のブランチ"
+git branch --show-current 2>/dev/null
+echo ""
 echo "### 最近のコミット"
 git log --oneline -5 2>/dev/null
 echo ""
