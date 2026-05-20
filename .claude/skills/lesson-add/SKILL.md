@@ -1,19 +1,19 @@
 ---
 name: lesson-add
 description: |
-  作業後の教訓を docs/lessons.md に追記する。
+  作業後の教訓を tasks/lessons.md に追記する。
   トリガー: "教訓を追記", "lessonsに追加", "/lesson-add"
   使用場面: 実装完了後・バグ修正後・意外な問題に遭遇したとき
 ---
 
 # lesson-add
 
-今日の作業で得た教訓を docs/lessons.md に「なぜそうしたか・次回どうすべきか」形式で追記する。
+今日の作業で得た教訓を tasks/lessons.md に「なぜそうしたか・次回どうすべきか」形式で追記する。
 
 ## 手順
 
 1. ユーザーから教訓の内容を聞く（何が起きたか、なぜそうしたか、次回どうするか）
-2. docs/lessons.md の末尾に以下の形式で追記する:
+2. tasks/lessons.md の末尾に以下の形式で追記する:
 
 ```
 ## YYYY-MM-DD <タイトル>
@@ -23,7 +23,7 @@ description: |
 - <教訓の内容（なぜそうしたか・次回どうするか）>
 ```
 
-3. 追記後、`git diff docs/lessons.md` で内容を確認してユーザーに見せる
+3. 追記後、`git diff tasks/lessons.md` で内容を確認してユーザーに見せる
 
 ## ルール
 
