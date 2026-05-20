@@ -24,7 +24,7 @@
 | `tests/` | pytest テスト（pytest.ini で src/ 以下が PATH に追加済み） |
 | `.github/workflows/` | GitHub Actions（morning/evening/events/test） |
 | `.claude/rules/` | 詳細ルール（コンテキスト注入） |
-| `docs/` | 教訓・アイデア |
+| `tasks/` | 教訓・アイデア |
 | `scripts/` | ユーティリティ（get_token.py: OAuth token 取得） |
 
 ## 行動原則

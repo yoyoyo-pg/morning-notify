@@ -1,13 +1,13 @@
 ---
-paths: docs/**/*.md,CLAUDE.md,README.md
+paths: tasks/**/*.md,CLAUDE.md,README.md
 ---
 
 # ドキュメント管理
 
 ## 改善サイクル
 
-1. **作業開始前**: `docs/lessons.md` を読み、関連するルールを確認する
-2. **ユーザーから指摘を受けたとき**: 即座に `docs/lessons.md` へ追記する（後回し禁止）
+1. **作業開始前**: `tasks/lessons.md` を読み、関連するルールを確認する
+2. **ユーザーから指摘を受けたとき**: 即座に `tasks/lessons.md` へ追記する（後回し禁止）
 3. **実装完了後（PR作成前）**: 非自明な判断・ハマりどころがあれば追記してPRに含める
 
 ## lessons.md の書き方
@@ -29,6 +29,6 @@ paths: docs/**/*.md,CLAUDE.md,README.md
 
 | ファイル | 用途 |
 |---------|------|
-| `docs/lessons.md` | ハマりどころ・判断理由・次への教訓（蓄積型） |
-| `docs/ideas.md` | 開発アイデアメモ |
+| `tasks/lessons.md` | ハマりどころ・判断理由・次への教訓（蓄積型） |
+| `tasks/ideas.md` | 開発アイデアメモ |
 | `docs/ai-coding-experience.md` | AIコーディング体験記 |
