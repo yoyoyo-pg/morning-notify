@@ -7,6 +7,7 @@ os.environ.setdefault("NOTION_API_KEY", "test_notion_key")
 os.environ.setdefault("NOTION_PARENT_PAGE_ID", "test_parent_id")
 
 from journal import create_journal_page
+from routine import ROUTINE_ITEMS
 
 _TITLE = "ジャーナル 2026/04/26(日)"
 _NOTION_URL = "https://notion.so/test-page-abcdef"
@@ -33,17 +34,6 @@ def test_create_journal_page_sets_title():
     assert kwargs["properties"]["title"][0]["text"]["content"] == _TITLE
 
 
-def test_create_journal_page_has_todo_blocks():
-    mock = _mock_notion()
-    with patch("journal.Client", return_value=mock):
-        create_journal_page(_TITLE)
-
-    children = mock.pages.create.call_args[1]["children"]
-    todo_blocks = [b for b in children if b["type"] == "to_do"]
-    assert len(todo_blocks) == 6  # 今日やったこと3 + 明日やること3
-    assert all(not b["to_do"]["checked"] for b in todo_blocks)
-
-
 def test_create_journal_page_has_sections():
     mock = _mock_notion()
     with patch("journal.Client", return_value=mock):
@@ -54,9 +44,34 @@ def test_create_journal_page_has_sections():
         b["heading_2"]["rich_text"][0]["text"]["content"]
         for b in children if b["type"] == "heading_2"
     ]
-    assert "今日やったこと" in headings
-    assert "明日やること" in headings
+    assert "ルーチン・やれたこと" in headings
     assert "メモ" in headings
+
+
+def test_create_journal_page_has_todo_blocks():
+    mock = _mock_notion()
+    with patch("journal.Client", return_value=mock):
+        create_journal_page(_TITLE)
+
+    children = mock.pages.create.call_args[1]["children"]
+    todo_blocks = [b for b in children if b["type"] == "to_do"]
+    assert len(todo_blocks) == len(ROUTINE_ITEMS)
+    assert all(not b["to_do"]["checked"] for b in todo_blocks)
+
+
+def test_create_journal_page_todo_labels_match_routine():
+    """ルーチン項目のテキストがto_doブロックに正しく設定される。"""
+    mock = _mock_notion()
+    with patch("journal.Client", return_value=mock):
+        create_journal_page(_TITLE)
+
+    children = mock.pages.create.call_args[1]["children"]
+    todo_blocks = [b for b in children if b["type"] == "to_do"]
+    for block, item in zip(todo_blocks, ROUTINE_ITEMS):
+        if item:
+            assert block["to_do"]["rich_text"][0]["text"]["content"] == item
+        else:
+            assert block["to_do"]["rich_text"] == []
 
 
 def test_create_journal_page_sets_parent_id():
