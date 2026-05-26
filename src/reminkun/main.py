@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from weather import get_weather
+# from weather import get_weather
 from gcalendar import get_today_events
 from news import get_news
 from journal import create_journal_page
@@ -13,7 +13,7 @@ from notifier import send
 _JST = timezone(timedelta(hours=9))
 _WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
 
-_COLOR_WEATHER = 0x5DADE2
+# _COLOR_WEATHER = 0x5DADE2
 _COLOR_CALENDAR = 0x2ECC71
 _COLOR_NEWS = 0xE67E22
 _COLOR_JOURNAL = 0x9B59B6
@@ -25,23 +25,23 @@ def build_embeds() -> tuple[str, list[dict]]:
     greeting = f"💼 グッドモーニング！{date_str}も最高のバリューを出していきましょう！"
     embeds = []
 
-    try:
-        w = get_weather()
-        weather_embed = {
-            "title": f"🌤 名古屋のウェザーコンディション：{w['desc']}",
-            "url": w["url"],
-            "color": _COLOR_WEATHER,
-            "fields": [
-                {"name": "🌡 気温", "value": f"{w['temp_min']}°C〜{w['temp_max']}°C", "inline": True},
-                {"name": "☔ 降水確率（最大）", "value": f"{w['precip_prob']}%", "inline": True},
-            ],
-        }
-    except Exception:
-        weather_embed = {
-            "title": "🌤 ウェザー情報をフェッチできませんでした",
-            "color": _COLOR_WEATHER,
-        }
-    embeds.append(weather_embed)
+    # try:
+    #     w = get_weather()
+    #     weather_embed = {
+    #         "title": f"🌤 名古屋のウェザーコンディション：{w['desc']}",
+    #         "url": w["url"],
+    #         "color": _COLOR_WEATHER,
+    #         "fields": [
+    #             {"name": "🌡 気温", "value": f"{w['temp_min']}°C〜{w['temp_max']}°C", "inline": True},
+    #             {"name": "☔ 降水確率（最大）", "value": f"{w['precip_prob']}%", "inline": True},
+    #         ],
+    #     }
+    # except Exception:
+    #     weather_embed = {
+    #         "title": "🌤 ウェザー情報をフェッチできませんでした",
+    #         "color": _COLOR_WEATHER,
+    #     }
+    # embeds.append(weather_embed)
 
     try:
         events = get_today_events()
