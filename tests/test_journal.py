@@ -45,7 +45,7 @@ def test_create_journal_page_has_sections():
         for b in children if b["type"] == "heading_2"
     ]
     assert "ルーチン・やれたこと" in headings
-    assert "メモ" in headings
+    assert "一日の振り返り" in headings
 
 
 def test_create_journal_page_has_todo_blocks():

@@ -42,7 +42,7 @@ def create_journal_page(title: str) -> str:
         _heading_2("ルーチン・やれたこと"),
         *[_to_do(item) for item in ROUTINE_ITEMS],
         _DIVIDER,
-        _heading_2("メモ"),
+        _heading_2("一日の振り返り"),
         _paragraph(),
     ]
 
