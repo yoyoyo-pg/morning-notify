@@ -128,7 +128,6 @@ PYTHONPATH=src/reminkun python src/georgekun/georgekun_main.py
 | Secret名 | 内容 |
 |----------|------|
 | `DISCORD_WEBHOOK_URL` | デフォルト Discord チャンネルの Webhook URL |
-| `DISCORD_WEBHOOK_URL_GEORGE` | ジョージ用 Discord チャンネルの Webhook URL（未設定時は `DISCORD_WEBHOOK_URL` にフォールバック） |
 | `DISCORD_WEBHOOK_URL_EVENTS` | 厚切りジェイソン用 Discord チャンネルの Webhook URL（未設定時は `DISCORD_WEBHOOK_URL` にフォールバック） |
 | `DISCORD_WEBHOOK_URL_SAKANAKUN` | さかなクン用 Discord チャンネルの Webhook URL（未設定時は `DISCORD_WEBHOOK_URL` にフォールバック） |
 | `GOOGLE_CLIENT_ID` | Google Cloud Console で発行（Google Calendar連携時） |
@@ -245,7 +244,7 @@ codex exec --full-auto --sandbox read-only --cd . "このコードをレビュ�
 
 | 項目 | 内容 |
 |------|------|
-| 通知先 | `DISCORD_WEBHOOK_URL_GEORGE`（未設定時は `DISCORD_WEBHOOK_URL` にフォールバック） |
+| 通知先 | `DISCORD_WEBHOOK_URL` |
 | 実行 | 毎日 6:00 JST（cron: `0 21 * * *` UTC） |
 
 ### ローカル実行

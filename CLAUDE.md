@@ -10,7 +10,7 @@
 | コマンド | 用途 |
 |---------|------|
 | `pip install -r requirements.txt` | 依存インストール |
-| `PYTHONPATH=src/reminkun python src/georgekun/georgekun_main.py` | 朝通知ローカル実行（ジョージ） |
+| `PYTHONPATH=src/reminkun python src/georgekun/georgekun_main.py` | 朝通知ローカル実行 |
 | `python src/eventkun/eventkun_main.py` | イベント通知ローカル実行 |
 | `python src/sakanakun/sakanakun_main.py` | 技術ニュース通知ローカル実行 |
 | `pytest tests/` | テスト実行 |

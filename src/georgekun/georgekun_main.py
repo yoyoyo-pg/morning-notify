@@ -1,4 +1,3 @@
-import os
 from datetime import datetime, timezone, timedelta
 
 from dotenv import load_dotenv
@@ -85,5 +84,4 @@ def build_embeds() -> tuple[str, list[dict]]:
 
 if __name__ == "__main__":
     content, embeds = build_embeds()
-    url = os.environ.get("DISCORD_WEBHOOK_URL_GEORGE") or os.environ["DISCORD_WEBHOOK_URL"]
-    send(embeds, content=content, webhook_url=url)
+    send(embeds, content=content)
