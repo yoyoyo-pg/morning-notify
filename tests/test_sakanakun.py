@@ -2,6 +2,8 @@ from unittest.mock import patch, Mock
 
 from sakanakun_main import build_embed, get_articles
 
+_ALL_SOURCES = ["AI", "セキュリティ", "Zenn", "AWS新機能", "AWSステータス", "JPCERT/CC"]
+
 
 def _make_entry(title: str, link: str) -> Mock:
     return Mock(title=title, link=link)
@@ -20,28 +22,29 @@ def _make_entries(n: int, prefix: str = "記事") -> list[dict]:
 # ── get_articles ───────────────────────────────────────────────
 
 def test_get_articles_returns_both_sources():
-    feeds = [_make_feed(_make_entries(3, "Zenn")), _make_feed(_make_entries(3, "Qiita"))]
+    feeds = [_make_feed(_make_entries(3, s)) for s in _ALL_SOURCES]
     with patch("sakanakun_main.feedparser.parse", side_effect=feeds):
         result = get_articles()
 
+    assert "AI" in result
     assert "Zenn" in result
-    assert "Qiita" in result
+    assert len(result["AI"]) == 3
     assert len(result["Zenn"]) == 3
-    assert len(result["Qiita"]) == 3
 
 
 def test_get_articles_limits_to_3_per_source():
-    feeds = [_make_feed(_make_entries(5)), _make_feed(_make_entries(5))]
+    feeds = [_make_feed(_make_entries(5)) for _ in _ALL_SOURCES]
     with patch("sakanakun_main.feedparser.parse", side_effect=feeds):
         result = get_articles()
 
     assert len(result["Zenn"]) == 3
-    assert len(result["Qiita"]) == 3
+    assert len(result["AI"]) == 3
 
 
 def test_get_articles_returns_title_url_tuple():
     entries = [{"title": "記事A", "link": "https://zenn.dev/a"}]
-    feeds = [_make_feed(entries), _make_feed([])]
+    feeds = [_make_feed([]) for _ in _ALL_SOURCES]
+    feeds[2] = _make_feed(entries)  # Zenn は3番目
     with patch("sakanakun_main.feedparser.parse", side_effect=feeds):
         result = get_articles()
 
@@ -55,16 +58,16 @@ def test_get_articles_returns_empty_on_failure():
         result = get_articles()
 
     assert result["Zenn"] == []
-    assert result["Qiita"] == []
+    assert result["AI"] == []
 
 
 def test_get_articles_partial_failure():
-    feeds = [Exception("zenn down"), _make_feed(_make_entries(3, "Qiita"))]
+    feeds = [Exception("ai down")] + [_make_feed(_make_entries(3, s)) for s in _ALL_SOURCES[1:]]
     with patch("sakanakun_main.feedparser.parse", side_effect=feeds):
         result = get_articles()
 
-    assert result["Zenn"] == []
-    assert len(result["Qiita"]) == 3
+    assert result["AI"] == []
+    assert len(result["Zenn"]) == 3
 
 
 # ── build_embed ────────────────────────────────────────────────
@@ -72,21 +75,21 @@ def test_get_articles_partial_failure():
 def test_build_embed_with_articles():
     articles = {
         "Zenn":  [("Zenn記事1", "https://zenn.dev/1"), ("Zenn記事2", "https://zenn.dev/2")],
-        "Qiita": [("Qiita記事1", "https://qiita.com/1")],
+        "AI":    [("AI記事1", "https://example.com/1")],
     }
     with patch("sakanakun_main.get_articles", return_value=articles):
         embed = build_embed()
 
-    assert embed["title"] == "🐟 ギョギョ！今週の技術トレンドまとめだよ〜！"
+    assert embed["title"] == "🐟 ギョギョ！今日の技術情報だよ〜！"
     assert "description" not in embed
     assert len(embed["fields"]) == 2
     assert embed["fields"][0]["name"] == "Zenn"
     assert "Zenn記事1" in embed["fields"][0]["value"]
-    assert embed["fields"][1]["name"] == "Qiita"
+    assert embed["fields"][1]["name"] == "AI"
 
 
 def test_build_embed_no_articles_shows_fallback():
-    with patch("sakanakun_main.get_articles", return_value={"Zenn": [], "Qiita": []}):
+    with patch("sakanakun_main.get_articles", return_value={s: [] for s in _ALL_SOURCES}):
         embed = build_embed()
 
     assert "description" in embed
@@ -96,7 +99,7 @@ def test_build_embed_no_articles_shows_fallback():
 def test_build_embed_partial_source():
     articles = {
         "Zenn":  [("Zenn記事1", "https://zenn.dev/1")],
-        "Qiita": [],
+        "AI":    [],
     }
     with patch("sakanakun_main.get_articles", return_value=articles):
         embed = build_embed()

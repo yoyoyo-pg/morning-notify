@@ -8,8 +8,12 @@ load_dotenv()
 from notifier import send
 
 _FEEDS = {
-    "Zenn":  "https://zenn.dev/feed",
-    "Qiita": "https://qiita.com/popular-items/feed.atom",
+    "AI":           "https://rss.itmedia.co.jp/rss/2.0/aiplus.xml",
+    "セキュリティ":  "https://rss.itmedia.co.jp/rss/2.0/security.xml",
+    "Zenn":         "https://zenn.dev/feed",
+    "AWS新機能":     "https://aws.amazon.com/jp/about-aws/whats-new/recent/feed/",
+    "AWSステータス": "https://status.aws.amazon.com/rss/all.rss",
+    "JPCERT/CC":    "https://www.jpcert.or.jp/rss/jpcert.rdf",
 }
 _ITEMS_PER_SOURCE = 3
 _COLOR = 0x00BCD4  # 水色
@@ -38,12 +42,12 @@ def build_embed() -> dict:
 
     if not fields:
         return {
-            "title": "🐟 ギョギョ！今週の技術まとめだよ〜！",
-            "description": "ギョ…今週は記事が取れなかったギョ…！🐡",
+            "title": "🐟 ギョギョ！今日の技術情報だよ〜！",
+            "description": "ギョ…今日は記事が取れなかったギョ…！🐡",
             "color": _COLOR,
         }
     return {
-        "title": "🐟 ギョギョ！今週の技術トレンドまとめだよ〜！",
+        "title": "🐟 ギョギョ！今日の技術情報だよ〜！",
         "color": _COLOR,
         "fields": fields,
     }

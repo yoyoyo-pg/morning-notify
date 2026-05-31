@@ -143,7 +143,7 @@ python src/reminkun/main.py
 |------------|------|------------|
 | 朝の通知 | 毎日6時 JST | `0 21 * * *` |
 | イベント通知 | 月・木 6時 JST | `0 21 * * 1,4` |
-| 技術ニュース | 毎日6時 JST | `0 21 * * *` |
+| 技術ニュース | 毎日8時 JST | `0 23 * * *` |
 
 mainへのPR作成時にはテストが自動実行される（`pytest`）。
 
@@ -156,8 +156,6 @@ mainへのPR作成時にはテストが自動実行される（`pytest`）。
 | 国内 | Yahoo!ニュース | `https://news.yahoo.co.jp/rss/categories/domestic.xml` |
 | 経済 | Yahoo!ニュース | `https://news.yahoo.co.jp/rss/topics/business.xml` |
 | 国際 | Yahoo!ニュース | `https://news.yahoo.co.jp/rss/topics/world.xml` |
-| AI | ITmedia AIPlus | `https://rss.itmedia.co.jp/rss/2.0/aiplus.xml` |
-| セキュリティ | ITmedia Security | `https://rss.itmedia.co.jp/rss/2.0/security.xml` |
 
 各カテゴリ3件ずつ取得。フィードが取得できない場合は空リストにフォールバックする。
 
@@ -165,9 +163,14 @@ mainへのPR作成時にはテストが自動実行される（`pytest`）。
 
 | カテゴリ | ソース | RSS URL |
 |---------|--------|---------|
+| AI | ITmedia AIPlus | `https://rss.itmedia.co.jp/rss/2.0/aiplus.xml` |
+| セキュリティ | ITmedia Security | `https://rss.itmedia.co.jp/rss/2.0/security.xml` |
 | 技術記事 | Zenn トレンド | `https://zenn.dev/feed` |
+| AWS新機能 | AWS What's New | `https://aws.amazon.com/jp/about-aws/whats-new/recent/feed/` |
+| AWSステータス | AWS Service Health | `https://status.aws.amazon.com/rss/all.rss` |
+| JPCERT/CC | JPCERT/CC | `https://www.jpcert.or.jp/rss/jpcert.rdf` |
 
-3件取得。フィードが取得できない場合はフォールバックメッセージを表示する。
+各カテゴリ3件取得。フィードが取得できない場合はフォールバックメッセージを表示する。
 
 ## 開発ツールのセットアップ
 
@@ -260,14 +263,14 @@ PYTHONPATH=src/reminkun python src/eventkun/eventkun_main.py
 
 ## さかなクン
 
-ZennのトレンドをさかなクンキャラでDiscordの技術ニュースチャンネルに毎日通知するボット。
+AI・セキュリティ・技術ニュースをさかなクンキャラでDiscordの技術ニュースチャンネルに毎日通知するボット。
 
 | 項目 | 内容 |
 |------|------|
-| 情報源 | Zenn RSS（`https://zenn.dev/feed`） |
-| 件数 | 3件 |
+| 情報源 | ITmedia AI・Security、Zenn、AWS新機能・ステータス、JPCERT/CC |
+| 件数 | 各カテゴリ3件 |
 | 通知先 | `DISCORD_WEBHOOK_URL_SAKANAKUN`（未設定時は `DISCORD_WEBHOOK_URL` にフォールバック） |
-| 実行 | 毎日 6:00 JST（cron: `0 21 * * *` UTC） |
+| 実行 | 毎日 8:00 JST（cron: `0 23 * * *` UTC） |
 
 ### ローカル実行
 
