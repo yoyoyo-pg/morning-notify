@@ -1,6 +1,6 @@
-# ショーンK（morning-notify）
+# ジョージ（morning-notify）
 
-毎朝6時にDiscordへ通知するPythonアプリ。このボットの名前は**ショーンK**。朝はウェザー・スケジュール・ニュース・ジャーナルを送る。
+毎朝6時にDiscordへ通知するPythonアプリ。「断定と静圧」スタイルで一日を始めるボット。
 
 ## 通知イメージ
 
@@ -10,10 +10,9 @@ Discord の Embed（カード形式）で送信する。
 
 | カード | 色 | 内容 |
 |--------|-----|------|
-| 🌤 ウェザーコンディション | 青 | 天気概況・気温・降水確率。タイトルクリックで wttr.in へ |
-| 📅 スケジュール・アジェンダ | 緑 | 当日の予定一覧（予定なしの場合はその旨表示） |
-| 📰 インサイトフルなニュース | オレンジ | カテゴリごとに記事タイトル（リンク付き）をフィールド表示 |
-| 📓 ジャーナル・セッション | 紫 | Notionの当日ジャーナルページへのリンク（Notion連携時のみ表示） |
+| 📅 本日のスケジュール | ダークグレー | 当日の予定一覧 |
+| 📰 今日の情報を確認しろ | ダークグレー | カテゴリごとに記事タイトル（リンク付き）をフィールド表示 |
+| 📓 今日の記録 | ダークグレー | Notionの当日ジャーナルページへのリンク（Notion連携時のみ表示） |
 
 ## セットアップ
 
@@ -119,7 +118,7 @@ GOOGLE_REFRESH_TOKEN=1//0xxxxxxxxxxxxxxxx...
 ### 7. ローカル実行
 
 ```bash
-python src/reminkun/main.py
+PYTHONPATH=src/reminkun python src/georgekun/georgekun_main.py
 ```
 
 ## GitHub Actions でのデプロイ
@@ -128,7 +127,8 @@ python src/reminkun/main.py
 
 | Secret名 | 内容 |
 |----------|------|
-| `DISCORD_WEBHOOK_URL` | ショーンK用 Discord チャンネルの Webhook URL |
+| `DISCORD_WEBHOOK_URL` | デフォルト Discord チャンネルの Webhook URL |
+| `DISCORD_WEBHOOK_URL_GEORGE` | ジョージ用 Discord チャンネルの Webhook URL（未設定時は `DISCORD_WEBHOOK_URL` にフォールバック） |
 | `DISCORD_WEBHOOK_URL_EVENTS` | 厚切りジェイソン用 Discord チャンネルの Webhook URL（未設定時は `DISCORD_WEBHOOK_URL` にフォールバック） |
 | `DISCORD_WEBHOOK_URL_SAKANAKUN` | さかなクン用 Discord チャンネルの Webhook URL（未設定時は `DISCORD_WEBHOOK_URL` にフォールバック） |
 | `GOOGLE_CLIENT_ID` | Google Cloud Console で発行（Google Calendar連携時） |
@@ -139,11 +139,12 @@ python src/reminkun/main.py
 
 設定後は以下のスケジュールで自動実行される。
 
-| ワークフロー | 時刻 | cron (UTC) |
-|------------|------|------------|
-| 朝の通知 | 毎日6時 JST | `0 21 * * *` |
-| イベント通知 | 月・木 6時 JST | `0 21 * * 1,4` |
-| 技術ニュース | 毎日8時 JST | `0 23 * * *` |
+| ワークフロー | ボット | 時刻 | cron (UTC) |
+|------------|--------|------|------------|
+| 朝の通知 | ジョージ | 毎日6時 JST | `0 21 * * *` |
+| 夜の通知 | ショーンK | 毎日21時 JST | `0 12 * * *` |
+| イベント通知 | 厚切りジェイソン | 月・木 6時 JST | `0 21 * * 1,4` |
+| 技術ニュース | さかなクン | 毎日8時 JST | `0 23 * * *` |
 
 mainへのPR作成時にはテストが自動実行される（`pytest`）。
 
@@ -236,6 +237,21 @@ codex   # インタラクティブモードで起動
 
 ```bash
 codex exec --full-auto --sandbox read-only --cd . "このコードをレビューしてください"
+```
+
+## ジョージ
+
+「断定と静圧」スタイルの朝通知ボット。毎朝6時にスケジュール・ニュース・ジャーナルをDiscordへ通知する。
+
+| 項目 | 内容 |
+|------|------|
+| 通知先 | `DISCORD_WEBHOOK_URL_GEORGE`（未設定時は `DISCORD_WEBHOOK_URL` にフォールバック） |
+| 実行 | 毎日 6:00 JST（cron: `0 21 * * *` UTC） |
+
+### ローカル実行
+
+```bash
+PYTHONPATH=src/reminkun python src/georgekun/georgekun_main.py
 ```
 
 ## 厚切りジェイソン

@@ -8,7 +8,8 @@ paths: src/**/*.py
 
 | モジュール | 役割 |
 |-----------|------|
-| `reminkun/main.py` | 朝通知エントリーポイント（weather/gcalendar/news/journal/notifier を呼び出す） |
+| `georgekun/georgekun_main.py` | 朝通知エントリーポイント（gcalendar/news/journal/notifier を呼び出す。reminkun の共有モジュールを流用） |
+| `reminkun/main.py` | ※旧朝通知。現在は参照のみ（georgian に置き換え済み） |
 | `reminkun/main_evening.py` | 夜通知エントリーポイント（21:00 JST） |
 | `reminkun/weather.py` | wttr.in API（`?format=j1`、APIキー不要） |
 | `reminkun/gcalendar.py` | Google Calendar API（OAuth2 refresh token 認証） |
