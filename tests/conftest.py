@@ -9,6 +9,7 @@ os.environ.setdefault("DISCORD_WEBHOOK_URL_SAKANAKUN", "https://discord.com/api/
 os.environ.setdefault("GOOGLE_CLIENT_ID", "test_id")
 os.environ.setdefault("GOOGLE_CLIENT_SECRET", "test_secret")
 os.environ.setdefault("GOOGLE_REFRESH_TOKEN", "test_token")
+os.environ.setdefault("NOTION_TEMPLATE_PAGE_ID", "test_template_id")
 
 
 @pytest.fixture(autouse=True)

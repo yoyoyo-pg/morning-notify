@@ -2,56 +2,32 @@ import os
 
 from notion_client import Client
 
-from routine import ROUTINE_ITEMS
+_BLOCK_META_KEYS = frozenset({
+    "id", "created_time", "last_edited_time",
+    "created_by", "last_edited_by",
+    "has_children", "archived", "in_trash", "parent",
+})
 
 
-def _heading_2(text: str) -> dict:
-    return {
-        "object": "block",
-        "type": "heading_2",
-        "heading_2": {"rich_text": [{"type": "text", "text": {"content": text}}]},
-    }
-
-
-def _to_do(text: str = "") -> dict:
-    rich_text = [{"type": "text", "text": {"content": text}}] if text else []
-    return {
-        "object": "block",
-        "type": "to_do",
-        "to_do": {"rich_text": rich_text, "checked": False},
-    }
-
-
-def _paragraph() -> dict:
-    return {
-        "object": "block",
-        "type": "paragraph",
-        "paragraph": {"rich_text": []},
-    }
-
-
-_DIVIDER = {"object": "block", "type": "divider", "divider": {}}
+def _strip_block(block: dict) -> dict:
+    """Notion APIのメタデータを除去し、pages.create に渡せる形にする。"""
+    block_type = block["type"]
+    content = {k: v for k, v in block[block_type].items() if k not in _BLOCK_META_KEYS}
+    return {"object": "block", "type": block_type, block_type: content}
 
 
 def create_journal_page(title: str) -> str:
-    """Notionに日次ジャーナルページを作成してURLを返す。"""
+    """テンプレートページを元にNotionへ日次ジャーナルページを作成してURLを返す。"""
     notion = Client(auth=os.environ["NOTION_API_KEY"])
+    template_id = os.environ["NOTION_TEMPLATE_PAGE_ID"]
     parent_id = os.environ["NOTION_PARENT_PAGE_ID"]
 
-    children = [
-        _heading_2("ルーチン・やれたこと"),
-        *[_to_do(item) for item in ROUTINE_ITEMS],
-        _DIVIDER,
-        _heading_2("一日の振り返り"),
-        _paragraph(),
-    ]
+    blocks = notion.blocks.children.list(block_id=template_id)["results"]
+    children = [_strip_block(b) for b in blocks]
 
     response = notion.pages.create(
         parent={"page_id": parent_id},
-        properties={
-            "title": [{"type": "text", "text": {"content": title}}],
-        },
+        properties={"title": [{"type": "text", "text": {"content": title}}]},
         children=children,
     )
-
     return response["url"]

@@ -27,7 +27,7 @@ paths: src/**/*.py
 | `DISCORD_WEBHOOK_URL_EVENTS` | `DISCORD_WEBHOOK_URL` にフォールバック |
 | `DISCORD_WEBHOOK_URL_SAKANAKUN` | `DISCORD_WEBHOOK_URL` にフォールバック |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN` | カレンダー欄が「取得できませんでした」 |
-| `NOTION_API_KEY` / `NOTION_PARENT_PAGE_ID` | ジャーナル欄をスキップ |
+| `NOTION_API_KEY` / `NOTION_PARENT_PAGE_ID` / `NOTION_TEMPLATE_PAGE_ID` | ジャーナル欄をスキップ |
 
 ## 設計制約（必ず守る）
 
