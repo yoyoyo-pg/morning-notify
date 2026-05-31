@@ -18,7 +18,7 @@
 ## ディレクトリ構造
 | パス | 役割 |
 |-----|------|
-| `src/reminkun/` | ショーンK（朝・夜通知） |
+| `src/reminkun/` | ジョージ（朝通知）＋ショーンK（夜通知）＋共有モジュール（notifier/gcalendar/news/journal等） |
 | `src/eventkun/` | 厚切りジェイソン（イベント通知） |
 | `src/sakanakun/` | さかなクン（Zenn技術ニュース通知） |
 | `tests/` | pytest テスト（pytest.ini で src/ 以下が PATH に追加済み） |
