@@ -1,11 +1,9 @@
 import feedparser
 
 _FEEDS = {
-    "国内":       "https://news.yahoo.co.jp/rss/categories/domestic.xml",
-    "経済":       "https://news.yahoo.co.jp/rss/topics/business.xml",
-    "国際":       "https://news.yahoo.co.jp/rss/topics/world.xml",
-    "AI":         "https://rss.itmedia.co.jp/rss/2.0/aiplus.xml",
-    "セキュリティ": "https://rss.itmedia.co.jp/rss/2.0/security.xml",
+    "国内": "https://news.yahoo.co.jp/rss/categories/domestic.xml",
+    "経済": "https://news.yahoo.co.jp/rss/topics/business.xml",
+    "国際": "https://news.yahoo.co.jp/rss/topics/world.xml",
 }
 
 _ITEMS_PER_CATEGORY = 3

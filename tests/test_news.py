@@ -14,8 +14,6 @@ def test_get_news_returns_three_per_category():
         _make_feed(["国内1", "国内2", "国内3", "国内4"]),
         _make_feed(["経済1", "経済2", "経済3", "経済4"]),
         _make_feed(["国際1", "国際2", "国際3", "国際4"]),
-        _make_feed(["AI1", "AI2", "AI3", "AI4"]),
-        _make_feed(["セキュリティ1", "セキュリティ2", "セキュリティ3", "セキュリティ4"]),
     ]
 
     with patch("news.feedparser.parse", side_effect=feeds):
@@ -26,12 +24,12 @@ def test_get_news_returns_three_per_category():
         ("国内2", "https://example.com/国内2"),
         ("国内3", "https://example.com/国内3"),
     ]
-    for category in ["経済", "国際", "AI", "セキュリティ"]:
+    for category in ["経済", "国際"]:
         assert len(result[category]) == 3
 
 
 def test_get_news_truncates_to_three():
-    feeds = [_make_feed([f"記事{i}" for i in range(10)])] * 5
+    feeds = [_make_feed([f"記事{i}" for i in range(10)])] * 3
 
     with patch("news.feedparser.parse", side_effect=feeds):
         result = get_news()
@@ -44,6 +42,6 @@ def test_get_news_fallback_on_error():
     with patch("news.feedparser.parse", side_effect=Exception("feed error")):
         result = get_news()
 
-    assert set(result.keys()) == {"国内", "経済", "国際", "AI", "セキュリティ"}
+    assert set(result.keys()) == {"国内", "経済", "国際"}
     for items in result.values():
         assert items == []
