@@ -83,5 +83,5 @@ def build_embeds() -> tuple[str, list[dict]]:
 
 
 if __name__ == "__main__":
-    content, embeds = build_embeds()
-    send(embeds, content=content)
+    greeting, embeds = build_embeds()
+    send(embeds, content=greeting)

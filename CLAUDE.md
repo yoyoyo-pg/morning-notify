@@ -10,7 +10,7 @@
 | コマンド | 用途 |
 |---------|------|
 | `pip install -r requirements.txt` | 依存インストール |
-| `PYTHONPATH=src/reminkun python src/georgekun/georgekun_main.py` | 朝通知ローカル実行 |
+| `python src/reminkun/main.py` | 朝通知ローカル実行 |
 | `python src/eventkun/eventkun_main.py` | イベント通知ローカル実行 |
 | `python src/sakanakun/sakanakun_main.py` | 技術ニュース通知ローカル実行 |
 | `pytest tests/` | テスト実行 |
@@ -18,8 +18,7 @@
 ## ディレクトリ構造
 | パス | 役割 |
 |-----|------|
-| `src/georgekun/` | ジョージ（朝通知） |
-| `src/reminkun/` | ショーンK（夜通知）＋共有モジュール（notifier/gcalendar/news/journal等） |
+| `src/reminkun/` | ジョージ（朝通知）＋ショーンK（夜通知）＋共有モジュール（notifier/gcalendar/news/journal等） |
 | `src/eventkun/` | 厚切りジェイソン（イベント通知） |
 | `src/sakanakun/` | さかなクン（Zenn技術ニュース通知） |
 | `tests/` | pytest テスト（pytest.ini で src/ 以下が PATH に追加済み） |

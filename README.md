@@ -118,7 +118,7 @@ GOOGLE_REFRESH_TOKEN=1//0xxxxxxxxxxxxxxxx...
 ### 7. ローカル実行
 
 ```bash
-PYTHONPATH=src/reminkun python src/georgekun/georgekun_main.py
+python src/reminkun/main.py
 ```
 
 ## GitHub Actions でのデプロイ
@@ -250,7 +250,7 @@ codex exec --full-auto --sandbox read-only --cd . "このコードをレビュ�
 ### ローカル実行
 
 ```bash
-PYTHONPATH=src/reminkun python src/georgekun/georgekun_main.py
+python src/reminkun/main.py
 ```
 
 ## 厚切りジェイソン
