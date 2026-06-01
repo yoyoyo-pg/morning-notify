@@ -10,9 +10,12 @@ _BLOCK_META_KEYS = frozenset({
 
 
 def _strip_block(block: dict) -> dict:
-    """Notion APIのメタデータを除去し、pages.create に渡せる形にする。"""
+    """Notion APIのメタデータとnull値を除去し、pages.create に渡せる形にする。"""
     block_type = block["type"]
-    content = {k: v for k, v in block[block_type].items() if k not in _BLOCK_META_KEYS}
+    content = {
+        k: v for k, v in block[block_type].items()
+        if k not in _BLOCK_META_KEYS and v is not None
+    }
     return {"object": "block", "type": block_type, block_type: content}
 
 

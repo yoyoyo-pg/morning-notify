@@ -54,6 +54,18 @@ def test_strip_block_removes_metadata():
     assert "archived" not in result
 
 
+def test_strip_block_removes_null_values():
+    """icon: null などnull値を含むブロックでも pages.create に渡せること。"""
+    block = {
+        "object": "block", "id": "bx", "type": "paragraph",
+        "created_time": "2026-01-01", "has_children": False, "archived": False,
+        "paragraph": {"rich_text": [], "color": "default", "icon": None},
+    }
+    result = _strip_block(block)
+    assert "icon" not in result["paragraph"]
+    assert "color" in result["paragraph"]
+
+
 def test_strip_block_keeps_content():
     block = _TEMPLATE_BLOCKS[1]  # to_do
     result = _strip_block(block)
